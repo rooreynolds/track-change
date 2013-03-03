@@ -2,7 +2,7 @@
 
 A simple Spotify app that displays the current artist and track on an attached LCD screen.
 
-Based on Peter Watts' [Spotify Kitchen Sink demo](https://github.com/ptrwtts/kitchensink) app. Uses the Digispark and LCD shield.
+Based on Peter Watts' [Spotify Kitchen Sink demo](https://github.com/ptrwtts/kitchensink) app.
 
 <a href="http://www.flickr.com/photos/rooreynolds/8524941840/" title="Spotify track-change app by Roo Reynolds"><img src="http://farm9.staticflickr.com/8228/8524941840_fa5aa354fd.jpg" width="500" height="375" alt="Spotify track-change app"></a>
 
