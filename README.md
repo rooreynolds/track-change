@@ -20,7 +20,7 @@ Based on Peter Watts' [Spotify Kitchen Sink demo](https://github.com/ptrwtts/kit
 4. `cd ~/Spotify`
 5. `git clone git://github.com/rooreynolds/track-change.git`
 6. `cd track-change/hardware`
-7. Start [the Sinatra app](https://github.com/rooreynolds/track-change/blob/master/hardware/digiusb-sinatra.rb) (defaults to port 4567), `ruby digiusb-sinatra.rb`
+7. Start [the Sinatra app](https://github.com/rooreynolds/track-change/blob/master/hardware/digiusb-sinatra.rb) (defaults to port 4567), `ruby digiusb-sinatra.rb` - (Alternatively, if you have a Matrix Orbital LCD display you might prefer [this equivalent app](https://github.com/rooreynolds/matrixorbital_lcd/).)
 8. Check you can pass text through to the LCD display, `http://localhost:4567/lcd?text=Hello`
 
 ### Execution
