@@ -1,6 +1,9 @@
+function tidyText(text) {
+	return $("<div/>").html(text).text().substring(0,20); // deencode html and truncate to max width
+}
+
 $(function(){
 
-	var truncate = 20;
 	var rows = 4;
 
 	// Update the page when the app loads
@@ -10,14 +13,19 @@ $(function(){
 	player.observe(models.EVENT.CHANGE, function (event) {
 		if (event.data.curtrack == true) {
 			var track = player.track;
-			var tracktext = $("<div/>").html(track.album.artist.name).text().substring(0,truncate) + "\n" 
-				+ $("<div/>").html(track.name).text().substring(0,truncate) + "\n";
+			var tracktext = tidyText(track.name) + "\n";
+			if (track.album.artist.name != null) {
+				$("#play-history").append('<div>Track changed to: '+track.name+' by '+track.album.artist.name+'</div>');
+				tracktext += tidyText(track.album.artist.name) + "\n";
+			} else {
+				tracktext += tidyText(track.artists[0].name) + "\n";
+				$("#play-history").append('<div>Track changed to: '+track.name+' by '+track.artists[0].name+'</div>');
+			}
 			if (rows == 4 && track.album) {
-				tracktext += $("<div/>").html(track.album.name).text().substring(0,truncate) + "\n"
-				+ track.album.year;
+				tracktext += tidyText(track.album.name) + "\n" + track.album.year;
 			}
 			$.get("http://localhost:4567/lcd", { text: tracktext });
-			$("#play-history").append('<div>Track changed to: '+track.name+' by '+track.album.artist.name+'</div>');
+			
 		}
 		nowPlaying();
 		
@@ -60,7 +68,7 @@ function nowPlaying() {
 	var track = player.track;
 
 	if (track == null) {
-		$("#now-playing").html("Painful silence!");
+		$("#now-playing").html("Silence");
 	} else {
 		var link = null;
 		if (player.context)
@@ -93,7 +101,14 @@ function nowPlaying() {
 		
 		var song = '<a href="'+track.uri+'">'+track.name+'</a>';
 		var album = '<a href="'+track.album.uri+'">'+track.album.name+'</a>';
-		var artist = '<a href="'+track.album.artist.uri+'">'+track.album.artist.name+'</a>';
+		var artist = null;
+
+		if (track.album.artist.name != null) {
+			artist = '<a href="'+track.album.artist.uri+'">'+track.album.artist.name+'</a>';
+		} else {
+			artist = track.artists[0].name;
+		}
+		
 		var context = player.context, extra ="";
 		if(context) { extra = ' from <a href="'+context+'">here</a>'; } // too lazy to fetch the actual context name
 		$("#now-playing").append(song+" by "+artist+" off "+album+extra);
