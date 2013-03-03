@@ -4,7 +4,7 @@ A simple Spotify app that displays the current artist and track on an attached L
 
 Based on Peter Watts' [Spotify Kitchen Sink demo](https://github.com/ptrwtts/kitchensink) app. Uses the Digispark and LCD shield.
 
-
+<a href="http://www.flickr.com/photos/rooreynolds/8524941840/" title="Spotify track-change app by Roo Reynolds"><img src="http://farm9.staticflickr.com/8228/8524941840_fa5aa354fd.jpg" width="500" height="375" alt="Spotify track-change app"></a>
 
 ### Prepare the Digispark hardware
 
@@ -26,8 +26,3 @@ Based on Peter Watts' [Spotify Kitchen Sink demo](https://github.com/ptrwtts/kit
 2. Open [Spotify](https://www.spotify.com/). Check you can see the new *Developer* tab
 3. Open the *trackchange* app by searching for `spotify:app:trackchange` in the Spotify search bar
 4. Observe that every track change results in the screen being updated
-
-```
-{Artist name}
-{Track name}
-```
