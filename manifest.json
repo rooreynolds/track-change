@@ -1,0 +1,31 @@
+{
+	"BundleType": "Application",
+	"BundleIdentifier": "trackchange",
+	"BundleVersion": "0.1b",
+	"AppIcon": {
+		"18x18": "icon.png"
+	},
+	"AppName": {
+		"en": "Track change"
+	},
+	"AppDescription": {
+		"en": "Track changes"
+	},
+	"SupportedLanguages": [
+		"en"
+	],
+	"DefaultTabs": [
+		{
+			"arguments": "player",
+			"title": {
+				"en": "Player"
+			}
+		}
+	],
+	"RequiredPermissions": [
+		"https://*",
+		"http://*"
+	],
+	"RequiredInterface": "1",
+	"VendorIdentifier": "com.rooreynolds"
+}
