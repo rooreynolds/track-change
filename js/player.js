@@ -1,4 +1,7 @@
 $(function(){
+
+	var truncate = 20;
+
 	// Update the page when the app loads
 	nowPlaying();
 	
@@ -6,7 +9,7 @@ $(function(){
 	player.observe(models.EVENT.CHANGE, function (event) {
 		if (event.data.curtrack == true) {
 			var track = player.track;
-			$.get("http://localhost:4567/lcd", { text: track.album.artist.name + "\n" + track.name } );
+			$.get("http://localhost:4567/lcd", { text: $("<div/>").html(track.album.artist.name).text().substring(0,truncate) + "\n" + $("<div/>").html(track.name).text().substring(0,truncate) } );
 			$("#play-history").append('<div>Track changed to: '+track.name+' by '+track.album.artist.name+'</div>');
 		}
 		nowPlaying();
