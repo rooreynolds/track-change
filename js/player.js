@@ -1,10 +1,10 @@
+var LCD_ROWS = 4;
+
 function tidyText(text) {
 	return $("<div/>").html(text).text().substring(0,20); // deencode html and truncate to max width
 }
 
 $(function(){
-
-	var rows = 4;
 
 	// Update the page when the app loads
 	nowPlaying();
@@ -15,21 +15,19 @@ $(function(){
 			var track = player.track;
 			var tracktext = tidyText(track.name) + "\n";
 			if (track.album.artist.name != null) {
-				$("#play-history").append('<div>Track changed to: '+track.name+' by '+track.album.artist.name+'</div>');
 				tracktext += tidyText(track.album.artist.name) + "\n";
+				$("#play-history").append('<div>'+track.name + (track.album.artist.name ? (' by '+track.album.artist.name) : '') +'</div>');
 			} else {
 				tracktext += tidyText(track.artists[0].name) + "\n";
-				$("#play-history").append('<div>Track changed to: '+track.name+' by '+track.artists[0].name+'</div>');
+				$("#play-history").append('<div>'+track.name + (track.artists[0].name ? (' by '+track.artists[0].name) : '') +'</div>');
 			}
-			if (rows == 4 && track.album) {
+			if (LCD_ROWS == 4 && track.album.name != null) {
 				tracktext += tidyText(track.album.name) + "\n" + track.album.year;
 			}
-			$.get("http://localhost:4567/lcd", { text: tracktext });
-			
+			$.get("http://localhost:4567/lcd", { text: tracktext } );
 		}
 		nowPlaying();
-		
-	}); 
+	});
 	
 	$("#commands a").click(function(e){
 		switch($(this).attr('command')) {
@@ -63,10 +61,8 @@ function clearPlaylist(playlist) {
 }
 
 function nowPlaying() {
-
 	// This will be null if nothing is playing.
 	var track = player.track;
-
 	if (track == null) {
 		$("#now-playing").html("Silence");
 	} else {
@@ -96,22 +92,30 @@ function nowPlaying() {
 		} else {
 			cover.append($(playerImage.node));
 		}
-		
 		$("#now-playing").append(cover);
 		
 		var song = '<a href="'+track.uri+'">'+track.name+'</a>';
-		var album = '<a href="'+track.album.uri+'">'+track.album.name+'</a>';
+		var album = null;
+		if (track.album.name != null) {
+			album = '<a href="'+track.album.uri+'">'+track.album.name+'</a>';
+		}
 		var artist = null;
-
 		if (track.album.artist.name != null) {
 			artist = '<a href="'+track.album.artist.uri+'">'+track.album.artist.name+'</a>';
 		} else {
 			artist = track.artists[0].name;
-		}
-		
+		}		
 		var context = player.context, extra ="";
 		if(context) { extra = ' from <a href="'+context+'">here</a>'; } // too lazy to fetch the actual context name
-		$("#now-playing").append(song+" by "+artist+" off "+album+extra);
-	}
-	
+		$("#now-playing").append(song);
+		if (artist != null) {
+			$("#now-playing").append(" by " + artist);
+		}
+		if (album != null) {
+			$("#now-playing").append(" off " + album);
+		}
+		if (extra != "") {
+			$("#now-playing").append(extra);
+		}
+	}	
 }
